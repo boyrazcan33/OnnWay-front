@@ -1,0 +1,173 @@
+// src/components/CitySelector.scss
+@import '../styles/variables';
+
+.city-selector {
+  padding: $spacing-lg;
+  max-width: 1200px;
+  margin: 0 auto;
+
+  .city-selection {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: $spacing-lg;
+    margin-bottom: $spacing-xl;
+
+    .city-card {
+      background: $white;
+      border: 2px solid transparent;
+      border-radius: $border-radius-lg;
+      padding: $spacing-xl;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: $box-shadow;
+
+      &:hover {
+        transform: translateY(-4px);
+        box-shadow: $box-shadow-lg;
+      }
+
+      &.selected {
+        border-color: $primary-color;
+        background: lighten($primary-color, 45%);
+      }
+
+      &.blurred {
+        opacity: 0.5;
+        cursor: not-allowed;
+
+        &:hover {
+          transform: none;
+        }
+      }
+
+      &.tallinn.selected {
+        border-color: $tallinn-color;
+        background: lighten($tallinn-color, 45%);
+      }
+
+      &.istanbul.selected {
+        border-color: $istanbul-color;
+        background: lighten($istanbul-color, 45%);
+      }
+
+      h2 {
+        margin: 0 0 $spacing-md 0;
+        font-size: $font-size-xl;
+        color: $dark-gray;
+      }
+
+      p {
+        margin: 0;
+        color: $gray;
+        font-size: $font-size-base;
+      }
+    }
+  }
+
+  .parameters-section {
+    background: $light-gray;
+    border-radius: $border-radius-lg;
+    padding: $spacing-xl;
+
+    h3 {
+      margin: 0 0 $spacing-lg 0;
+      text-align: center;
+      color: $dark-gray;
+      font-size: $font-size-xl;
+    }
+
+    .parameter-group {
+      margin-bottom: $spacing-lg;
+
+      h4 {
+        margin: 0 0 $spacing-md 0;
+        color: $dark-gray;
+        font-size: $font-size-lg;
+      }
+
+      .radio-group {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: $spacing-sm;
+
+        .radio-label {
+          display: flex;
+          align-items: center;
+          padding: $spacing-md;
+          background: $white;
+          border: 2px solid #e9ecef;
+          border-radius: $border-radius;
+          cursor: pointer;
+          transition: all 0.2s ease;
+
+          &:hover {
+            border-color: $primary-color;
+          }
+
+          input[type="radio"] {
+            margin-right: $spacing-sm;
+            accent-color: $primary-color;
+          }
+
+          input[type="radio"]:checked + span {
+            font-weight: 600;
+            color: $primary-color;
+          }
+
+          span {
+            font-size: $font-size-base;
+            color: $dark-gray;
+          }
+        }
+      }
+    }
+
+    .apply-button {
+      width: 100%;
+      padding: $spacing-lg;
+      font-size: $font-size-lg;
+      font-weight: 600;
+      border: none;
+      border-radius: $border-radius;
+      cursor: pointer;
+      transition: all 0.3s ease;
+
+      &.enabled {
+        background: $success-color;
+        color: $white;
+
+        &:hover {
+          background: darken($success-color, 10%);
+          transform: translateY(-2px);
+        }
+      }
+
+      &.disabled {
+        background: $gray;
+        color: $white;
+        cursor: not-allowed;
+      }
+    }
+  }
+}
+
+// Mobile responsiveness
+@media (max-width: $mobile) {
+  .city-selector {
+    padding: $spacing-md;
+
+    .city-selection {
+      grid-template-columns: 1fr;
+      gap: $spacing-md;
+    }
+
+    .parameters-section {
+      padding: $spacing-lg;
+
+      .parameter-group .radio-group {
+        grid-template-columns: 1fr;
+      }
+    }
+  }
+}

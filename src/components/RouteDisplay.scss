@@ -1,0 +1,202 @@
+// src/components/RouteDisplay.scss
+@import '../styles/variables';
+
+.route-display {
+  padding: $spacing-lg;
+  max-width: 800px;
+  margin: 0 auto;
+
+  .route-summary {
+    background: $white;
+    border-radius: $border-radius-lg;
+    padding: $spacing-xl;
+    margin-bottom: $spacing-lg;
+    box-shadow: $box-shadow;
+    text-align: center;
+
+    h2 {
+      margin: 0 0 $spacing-lg 0;
+      color: $dark-gray;
+      font-size: $font-size-xl;
+    }
+
+    .summary-stats {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: $spacing-lg;
+
+      .stat {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+
+        .label {
+          font-size: $font-size-sm;
+          color: $gray;
+          margin-bottom: $spacing-xs;
+          text-transform: uppercase;
+          font-weight: 500;
+        }
+
+        .value {
+          font-size: $font-size-lg;
+          font-weight: 700;
+          color: $primary-color;
+        }
+      }
+    }
+  }
+
+  .route-steps {
+    h3 {
+      margin: 0 0 $spacing-lg 0;
+      color: $dark-gray;
+      font-size: $font-size-xl;
+      text-align: center;
+    }
+
+    .route-step {
+      display: flex;
+      background: $white;
+      border-radius: $border-radius;
+      margin-bottom: $spacing-md;
+      padding: $spacing-lg;
+      box-shadow: $box-shadow;
+      transition: transform 0.2s ease;
+
+      &:hover {
+        transform: translateY(-2px);
+      }
+
+      .step-number {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 40px;
+        height: 40px;
+        background: $primary-color;
+        color: $white;
+        border-radius: 50%;
+        font-weight: 700;
+        font-size: $font-size-lg;
+        margin-right: $spacing-lg;
+        flex-shrink: 0;
+      }
+
+      .step-content {
+        flex: 1;
+
+        .step-header {
+          display: flex;
+          justify-content: space-between;
+          align-items: flex-start;
+          margin-bottom: $spacing-sm;
+
+          h4 {
+            margin: 0;
+            color: $dark-gray;
+            font-size: $font-size-lg;
+            font-weight: 600;
+          }
+
+          .step-meta {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            gap: $spacing-xs;
+
+            span {
+              font-size: $font-size-sm;
+              padding: $spacing-xs $spacing-sm;
+              background: $light-gray;
+              border-radius: $border-radius-sm;
+              white-space: nowrap;
+            }
+
+            .walking-time {
+              background: lighten($primary-color, 40%);
+              color: $primary-color;
+            }
+
+            .cost {
+              background: lighten($success-color, 40%);
+              color: $success-color;
+            }
+
+            .duration {
+              background: lighten($warning-color, 30%);
+              color: darken($warning-color, 20%);
+            }
+          }
+        }
+
+        .address {
+          margin: $spacing-sm 0;
+          color: $gray;
+          font-size: $font-size-sm;
+          font-style: italic;
+        }
+
+        .description {
+          margin: 0;
+          color: $dark-gray;
+          line-height: 1.5;
+        }
+      }
+    }
+  }
+
+  .route-actions {
+    text-align: center;
+    margin-top: $spacing-xl;
+
+    .new-route-button {
+      background: $secondary-color;
+      color: $white;
+      border: none;
+      padding: $spacing-md $spacing-xl;
+      font-size: $font-size-base;
+      font-weight: 600;
+      border-radius: $border-radius;
+      cursor: pointer;
+      transition: all 0.3s ease;
+
+      &:hover {
+        background: darken($secondary-color, 10%);
+        transform: translateY(-2px);
+      }
+    }
+  }
+}
+
+// Mobile responsiveness
+@media (max-width: $mobile) {
+  .route-display {
+    padding: $spacing-md;
+
+    .route-summary .summary-stats {
+      grid-template-columns: 1fr;
+      gap: $spacing-md;
+    }
+
+    .route-steps .route-step {
+      flex-direction: column;
+
+      .step-number {
+        align-self: flex-start;
+        margin-bottom: $spacing-md;
+        margin-right: 0;
+      }
+
+      .step-content .step-header {
+        flex-direction: column;
+        align-items: flex-start;
+
+        .step-meta {
+          margin-top: $spacing-sm;
+          align-items: flex-start;
+        }
+      }
+    }
+  }
+}
