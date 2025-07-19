@@ -115,7 +115,7 @@ function App() {
   return (
       <div className="app">
         <header className="app-header">
-          <h1>🗺️ Route Optimizer</h1>
+          <h1>🗺️ OnnWay </h1>
           <p>Create optimized tourism routes for Istanbul and Tallinn</p>
         </header>
 
