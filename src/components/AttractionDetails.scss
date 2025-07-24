@@ -1,0 +1,194 @@
+// src/components/AttractionDetails.scss
+@import '../styles/variables';
+
+.attraction-details-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2000;
+  padding: $spacing-lg;
+
+  .attraction-details {
+    background: $white;
+    border-radius: $border-radius-lg;
+    max-width: 600px;
+    width: 100%;
+    max-height: 90vh;
+    overflow-y: auto;
+    box-shadow: $box-shadow-lg;
+    animation: slideUp 0.3s ease;
+
+    .details-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      padding: $spacing-xl;
+      border-bottom: 1px solid $light-gray;
+
+      .header-content {
+        flex: 1;
+
+        h2 {
+          margin: 0 0 $spacing-sm 0;
+          color: $dark-gray;
+          font-size: $font-size-xl;
+          font-weight: 700;
+        }
+
+        .address {
+          margin: 0;
+          color: $gray;
+          font-style: italic;
+        }
+      }
+
+      .close-btn {
+        background: none;
+        border: none;
+        font-size: $font-size-xl;
+        cursor: pointer;
+        color: $gray;
+        padding: $spacing-sm;
+        margin: -#{$spacing-sm};
+
+        &:hover {
+          color: $dark-gray;
+        }
+      }
+    }
+
+    .details-content {
+      padding: $spacing-xl;
+
+      h3 {
+        margin: 0 0 $spacing-md 0;
+        color: $dark-gray;
+        font-size: $font-size-lg;
+        font-weight: 600;
+      }
+
+      .description {
+        margin-bottom: $spacing-xl;
+
+        p {
+          margin: 0 0 $spacing-lg 0;
+          line-height: 1.6;
+          color: $dark-gray;
+        }
+
+        .visit-info {
+          display: grid;
+          grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+          gap: $spacing-md;
+
+          .info-item {
+            display: flex;
+            flex-direction: column;
+            gap: $spacing-xs;
+
+            .label {
+              font-size: $font-size-sm;
+              color: $gray;
+              font-weight: 500;
+            }
+
+            .value {
+              font-weight: 600;
+              color: $primary-color;
+            }
+          }
+        }
+      }
+
+      .actions {
+        .action-buttons {
+          display: grid;
+          grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+          gap: $spacing-sm;
+
+          .action-btn {
+            padding: $spacing-md;
+            border: none;
+            border-radius: $border-radius;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-align: center;
+
+            &.maps {
+              background: #4285f4;
+              color: $white;
+
+              &:hover {
+                background: darken(#4285f4, 10%);
+              }
+            }
+
+            &.street-view {
+              background: $success-color;
+              color: $white;
+
+              &:hover {
+                background: darken($success-color, 10%);
+              }
+            }
+
+            &.reviews {
+              background: #00aa6c;
+              color: $white;
+
+              &:hover {
+                background: darken(#00aa6c, 10%);
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateY(50px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+// Mobile responsiveness
+@media (max-width: $mobile) {
+  .attraction-details-overlay {
+    padding: $spacing-md;
+
+    .attraction-details {
+      .details-header {
+        padding: $spacing-lg;
+        flex-direction: column;
+        align-items: stretch;
+
+        .close-btn {
+          align-self: flex-end;
+          margin-bottom: $spacing-md;
+        }
+      }
+
+      .details-content {
+        padding: $spacing-lg;
+
+        .actions .action-buttons {
+          grid-template-columns: 1fr;
+        }
+      }
+    }
+  }
+}
