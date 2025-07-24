@@ -153,23 +153,25 @@ const RouteMap: React.FC<RouteMapProps> = ({ route, userLocation, onAttractionCl
     };
 
     const openInMaps = () => {
-        const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
         const validStops = route.filter(stop => stop.latitude && stop.longitude);
 
         if (validStops.length === 0) return;
 
-        const waypoints = validStops
-            .map(stop => `${stop.latitude},${stop.longitude}`)
-            .join('|');
-
-        if (isIOS) {
-            // Apple Maps
-            const appleUrl = `http://maps.apple.com/?daddr=${waypoints}&dirflg=w`;
-            window.open(appleUrl, '_blank');
+        // Use OpenStreetMap with OSRM routing (same engine as our embedded map)
+        if (validStops.length === 1) {
+            // Single destination
+            const stop = validStops[0];
+            const osmUrl = `https://www.openstreetmap.org/directions?engine=fossgis_osrm_foot&route=${userLocation.lat}%2C${userLocation.lon}%3B${stop.latitude}%2C${stop.longitude}`;
+            window.open(osmUrl, '_blank');
         } else {
-            // Google Maps
-            const googleUrl = `https://www.google.com/maps/dir/${userLocation.lat},${userLocation.lon}/${waypoints}`;
-            window.open(googleUrl, '_blank');
+            // Multiple destinations - create route with all waypoints
+            const allCoordinates = [
+                `${userLocation.lat}%2C${userLocation.lon}`,
+                ...validStops.map(stop => `${stop.latitude}%2C${stop.longitude}`)
+            ].join('%3B');
+
+            const osmUrl = `https://www.openstreetmap.org/directions?engine=fossgis_osrm_foot&route=${allCoordinates}`;
+            window.open(osmUrl, '_blank');
         }
     };
 

@@ -87,7 +87,7 @@ const RouteDisplay: React.FC<RouteDisplayProps> = ({ route, userLocation, onCrea
                     </div>
                     <div className="stat">
                         <span className="label">Total Cost</span>
-                        <span className="value">${route.totalCost}</span>
+                        <span className="value">€{route.totalCost}</span>
                     </div>
                 </div>
                 <div className="summary-actions">
@@ -127,7 +127,7 @@ const RouteDisplay: React.FC<RouteDisplayProps> = ({ route, userLocation, onCrea
                                 <h4>{stop.name}</h4>
                                 <div className="step-meta">
                                     <span className="walking-time">🚶 {stop.walkingTime}</span>
-                                    <span className="cost">💰 ${stop.cost}</span>
+                                    <span className="cost">💰 €{stop.cost}</span>
                                     <span className="duration">⏱️ {stop.estimatedDuration} min</span>
                                 </div>
                             </div>
