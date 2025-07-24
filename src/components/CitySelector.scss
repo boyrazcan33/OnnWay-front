@@ -14,28 +14,53 @@
 
     .city-card {
       background: $white;
-      border: 2px solid transparent;
+      border: 3px solid transparent;
       border-radius: $border-radius-lg;
-      padding: 6rem;
-      min-height: 350px;
+      padding: 4rem 2rem;
+      min-height: 300px;
       text-align: center;
       cursor: pointer;
-      transition: all 0.3s ease;
+      transition: all 0.4s ease;
       box-shadow: $box-shadow;
+      position: relative;
+      overflow: hidden;
+
+      // Touch-friendly tap targets
+      touch-action: manipulation;
+      -webkit-tap-highlight-color: transparent;
+
+      &::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: linear-gradient(135deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0.05) 100%);
+        border-radius: $border-radius-lg;
+        z-index: 1;
+      }
 
       &:hover {
-        transform: translateY(-4px);
-        box-shadow: $box-shadow-lg;
+        transform: translateY(-6px) scale(1.02);
+        box-shadow: 0 12px 24px rgba(0,0,0,0.2);
+      }
+
+      &:active {
+        transform: translateY(-2px) scale(1.01);
+        transition: all 0.1s ease;
       }
 
       &.selected {
         border-color: $primary-color;
         background: lighten($primary-color, 45%);
+        transform: translateY(-4px);
       }
 
       &.blurred {
-        opacity: 0.5;
+        opacity: 0.4;
         cursor: not-allowed;
+        filter: grayscale(50%);
 
         &:hover {
           transform: none;
@@ -54,71 +79,64 @@
 
       h2 {
         margin: 0 0 $spacing-md 0;
-        font-size: $font-size-xl;
-        color: $dark-gray;
+        font-size: 2rem;
+        color: $white;
+        position: relative;
+        z-index: 2;
+        text-shadow: 2px 2px 4px rgba(0,0,0,0.7);
+        font-weight: 700;
       }
 
       p {
         margin: 0;
-        color: $gray;
-        font-size: $font-size-base;
+        color: $white;
+        font-size: $font-size-lg;
+        position: relative;
+        z-index: 2;
+        text-shadow: 1px 1px 2px rgba(0,0,0,0.7);
+        font-weight: 500;
       }
 
-      // Add background image styles
+      // City background images
       background-size: cover;
       background-position: center;
       background-repeat: no-repeat;
-      position: relative;
 
-      // Add overlay for better text readability
-      &::before {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        background: rgba(255, 255, 255, 0.1);
-        border-radius: $border-radius-lg;
-        z-index: 1;
-      }
-
-      // Ensure content is above overlay
-      h2, p {
-        position: relative;
-        z-index: 2;
-      }
-
-      // Specific backgrounds for each city
       &.tallinn {
-        background-image: url('../images/tallinn.jpg');
+        background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)),
+        url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300"><rect width="400" height="300" fill="%23667eea"/><circle cx="100" cy="100" r="50" fill="%23764ba2" opacity="0.7"/><circle cx="300" cy="200" r="40" fill="%23764ba2" opacity="0.5"/></svg>');
       }
 
       &.istanbul {
-        background-image: url('../images/istanbul.jpg');
+        background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)),
+        url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300"><rect width="400" height="300" fill="%23e74c3c"/><circle cx="150" cy="150" r="60" fill="%23c0392b" opacity="0.7"/><circle cx="350" cy="80" r="35" fill="%23c0392b" opacity="0.5"/></svg>');
       }
     }
   }
 
   .parameters-section {
-    background: $light-gray;
+    background: $white;
     border-radius: $border-radius-lg;
     padding: $spacing-xl;
+    box-shadow: $box-shadow;
+    animation: slideUp 0.4s ease;
 
     h3 {
       margin: 0 0 $spacing-lg 0;
       text-align: center;
       color: $dark-gray;
       font-size: $font-size-xl;
+      font-weight: 700;
     }
 
     .parameter-group {
-      margin-bottom: $spacing-lg;
+      margin-bottom: $spacing-xl;
 
       h4 {
         margin: 0 0 $spacing-md 0;
         color: $dark-gray;
         font-size: $font-size-lg;
+        font-weight: 600;
       }
 
       .radio-group {
@@ -130,29 +148,43 @@
           display: flex;
           align-items: center;
           padding: $spacing-md;
-          background: $white;
-          border: 2px solid #e9ecef;
+          background: $light-gray;
+          border: 2px solid transparent;
           border-radius: $border-radius;
           cursor: pointer;
-          transition: all 0.2s ease;
+          transition: all 0.3s ease;
+          touch-action: manipulation;
+          -webkit-tap-highlight-color: transparent;
 
           &:hover {
             border-color: $primary-color;
+            background: lighten($primary-color, 45%);
+            transform: translateY(-1px);
+          }
+
+          &:has(input:checked) {
+            border-color: $primary-color;
+            background: lighten($primary-color, 40%);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,123,255,0.2);
           }
 
           input[type="radio"] {
             margin-right: $spacing-sm;
             accent-color: $primary-color;
-          }
-
-          input[type="radio"]:checked + span {
-            font-weight: 600;
-            color: $primary-color;
+            transform: scale(1.2);
           }
 
           span {
             font-size: $font-size-base;
             color: $dark-gray;
+            font-weight: 500;
+            transition: all 0.2s ease;
+          }
+
+          &:has(input:checked) span {
+            font-weight: 700;
+            color: $primary-color;
           }
         }
       }
@@ -162,19 +194,29 @@
       width: 100%;
       padding: $spacing-lg;
       font-size: $font-size-lg;
-      font-weight: 600;
+      font-weight: 700;
       border: none;
-      border-radius: $border-radius;
+      border-radius: $border-radius-lg;
       cursor: pointer;
       transition: all 0.3s ease;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      touch-action: manipulation;
+      -webkit-tap-highlight-color: transparent;
 
       &.enabled {
-        background: $success-color;
+        background: linear-gradient(135deg, $success-color 0%, darken($success-color, 10%) 100%);
         color: $white;
+        box-shadow: 0 4px 12px rgba(40,167,69,0.3);
 
         &:hover {
-          background: darken($success-color, 10%);
-          transform: translateY(-2px);
+          transform: translateY(-3px);
+          box-shadow: 0 8px 20px rgba(40,167,69,0.4);
+        }
+
+        &:active {
+          transform: translateY(-1px);
+          transition: all 0.1s ease;
         }
       }
 
@@ -182,19 +224,44 @@
         background: $gray;
         color: $white;
         cursor: not-allowed;
+        opacity: 0.6;
       }
     }
   }
 }
 
-// Mobile responsiveness
+@keyframes slideUp {
+  from {
+    transform: translateY(30px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+// Mobile responsiveness with touch improvements
 @media (max-width: $mobile) {
   .city-selector {
     padding: $spacing-md;
 
     .city-selection {
       grid-template-columns: 1fr;
-      gap: $spacing-md;
+      gap: $spacing-lg;
+
+      .city-card {
+        padding: 3rem 2rem;
+        min-height: 250px;
+
+        h2 {
+          font-size: 1.75rem;
+        }
+
+        p {
+          font-size: $font-size-base;
+        }
+      }
     }
 
     .parameters-section {
@@ -202,7 +269,28 @@
 
       .parameter-group .radio-group {
         grid-template-columns: 1fr;
+        gap: $spacing-md;
+
+        .radio-label {
+          padding: $spacing-lg;
+          justify-content: center;
+          text-align: center;
+        }
       }
+
+      .apply-button {
+        padding: $spacing-xl;
+        font-size: $font-size-xl;
+      }
+    }
+  }
+}
+
+// Tablet responsiveness
+@media (max-width: $tablet) and (min-width: $mobile + 1px) {
+  .city-selector {
+    .parameters-section .parameter-group .radio-group {
+      grid-template-columns: repeat(2, 1fr);
     }
   }
 }
