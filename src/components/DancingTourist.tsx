@@ -5,127 +5,132 @@ import './DancingTourist.scss';
 const DancingTourist: React.FC = () => {
     return (
         <div className="dancing-tourist">
-            <svg width="200" height="250" viewBox="0 0 200 250">
+            <svg width="280" height="320" viewBox="0 0 280 320">
                 {/* Head */}
                 <circle
-                    cx="100"
-                    cy="40"
-                    r="25"
+                    cx="140"
+                    cy="50"
+                    r="35"
                     fill="#ffdbac"
                     className="head"
                 />
 
                 {/* Eyes */}
-                <circle cx="92" cy="35" r="3" fill="#333" className="eye-left" />
-                <circle cx="108" cy="35" r="3" fill="#333" className="eye-right" />
+                <circle cx="128" cy="42" r="4" fill="#333" className="eye-left" />
+                <circle cx="152" cy="42" r="4" fill="#333" className="eye-right" />
 
                 {/* Smile */}
                 <path
-                    d="M 90 45 Q 100 52 110 45"
+                    d="M 125 58 Q 140 68 155 58"
                     stroke="#333"
-                    strokeWidth="2"
+                    strokeWidth="3"
                     fill="none"
                     className="smile"
                 />
 
-                {/* Hat */}
+                {/* Proper Baseball Cap */}
+                <path
+                    d="M 105 35 Q 140 15 175 35 Q 175 25 140 25 Q 105 25 105 35"
+                    fill="#ff4444"
+                    className="hat-top"
+                />
+                {/* Cap visor */}
                 <ellipse
-                    cx="100"
-                    cy="20"
-                    rx="30"
+                    cx="140"
+                    cy="35"
+                    rx="45"
                     ry="8"
-                    fill="#ff6b6b"
-                    className="hat"
+                    fill="#cc3333"
+                    className="hat-visor"
                 />
 
-                {/* Hat detail */}
-                <circle cx="100" cy="20" r="4" fill="#ff5252" />
-
-                {/* Body */}
-                <rect
-                    x="80"
-                    y="65"
-                    width="40"
-                    height="60"
-                    rx="10"
+                {/* Fat Body */}
+                <ellipse
+                    x="90"
+                    y="85"
+                    cx="140"
+                    cy="140"
+                    rx="60"
+                    ry="70"
                     fill="#4ecdc4"
                     className="body"
                 />
 
-                {/* Shirt details */}
-                <rect x="85" y="70" width="30" height="3" fill="#45b7aa" />
-                <rect x="85" y="76" width="30" height="3" fill="#45b7aa" />
+                {/* ONNWAY Text on torso */}
+                <text
+                    x="140"
+                    y="135"
+                    textAnchor="middle"
+                    fontSize="18"
+                    fontWeight="bold"
+                    fill="#2c3e50"
+                    className="onnway-text"
+                >
+                    ONNWAY
+                </text>
 
                 {/* Left Arm */}
-                <rect
-                    x="60"
-                    y="75"
-                    width="25"
-                    height="8"
-                    rx="4"
+                <ellipse
+                    cx="85"
+                    cy="110"
+                    rx="12"
+                    ry="25"
                     fill="#ffdbac"
                     className="left-arm"
-                    style={{ transformOrigin: '72px 79px' }}
+                    style={{ transformOrigin: '85px 95px' }}
                 />
 
                 {/* Right Arm */}
-                <rect
-                    x="115"
-                    y="75"
-                    width="25"
-                    height="8"
-                    rx="4"
+                <ellipse
+                    cx="195"
+                    cy="110"
+                    rx="12"
+                    ry="25"
                     fill="#ffdbac"
                     className="right-arm"
-                    style={{ transformOrigin: '128px 79px' }}
+                    style={{ transformOrigin: '195px 95px' }}
                 />
 
                 {/* Backpack */}
-                <rect
-                    x="85"
-                    y="70"
-                    width="30"
-                    height="35"
-                    rx="5"
+                <ellipse
+                    cx="140"
+                    cy="90"
+                    rx="35"
+                    ry="25"
                     fill="#8b4513"
                     className="backpack"
                 />
 
                 {/* Backpack straps */}
-                <rect x="88" y="68" width="4" height="20" fill="#654321" className="strap-left" />
-                <rect x="108" y="68" width="4" height="20" fill="#654321" className="strap-right" />
+                <rect x="115" y="85" width="6" height="30" fill="#654321" className="strap-left" />
+                <rect x="159" y="85" width="6" height="30" fill="#654321" className="strap-right" />
 
-                {/* Backpack pocket */}
-                <rect x="90" y="80" width="20" height="15" rx="3" fill="#a0522d" />
-                <circle cx="100" cy="87" r="2" fill="#654321" />
-
-                {/* Left Leg */}
-                <rect
-                    x="88"
-                    y="125"
-                    width="8"
-                    height="40"
+                {/* Fat Legs */}
+                <ellipse
+                    cx="120"
+                    cy="240"
+                    rx="18"
+                    ry="45"
                     fill="#333"
                     className="left-leg"
                 />
 
-                {/* Right Leg */}
-                <rect
-                    x="104"
-                    y="125"
-                    width="8"
-                    height="40"
+                <ellipse
+                    cx="160"
+                    cy="240"
+                    rx="18"
+                    ry="45"
                     fill="#333"
                     className="right-leg"
                 />
 
-                {/* Feet */}
-                <ellipse cx="92" cy="170" rx="12" ry="6" fill="#8b4513" className="foot-left" />
-                <ellipse cx="108" cy="170" rx="12" ry="6" fill="#8b4513" className="foot-right" />
+                {/* Feet for moonwalking */}
+                <ellipse cx="120" cy="290" rx="20" ry="8" fill="#8b4513" className="foot-left" />
+                <ellipse cx="160" cy="290" rx="20" ry="8" fill="#8b4513" className="foot-right" />
 
-                {/* Shoe laces */}
-                <ellipse cx="92" cy="168" rx="4" ry="2" fill="#654321" />
-                <ellipse cx="108" cy="168" rx="4" ry="2" fill="#654321" />
+                {/* Shoe details */}
+                <ellipse cx="120" cy="287" rx="8" ry="3" fill="#654321" />
+                <ellipse cx="160" cy="287" rx="8" ry="3" fill="#654321" />
             </svg>
         </div>
     );
