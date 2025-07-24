@@ -5,132 +5,141 @@ import './DancingTourist.scss';
 const DancingTourist: React.FC = () => {
     return (
         <div className="dancing-tourist">
-            <svg width="280" height="320" viewBox="0 0 280 320">
-                {/* Head */}
-                <circle
-                    cx="140"
+            <svg width="300" height="340" viewBox="0 0 300 340">
+                {/* Head (side view) */}
+                <ellipse
+                    cx="150"
                     cy="50"
-                    r="35"
-                    fill="#ffdbac"
+                    rx="30"
+                    ry="35"
+                    fill="#8B4513"
                     className="head"
                 />
 
-                {/* Eyes */}
-                <circle cx="128" cy="42" r="4" fill="#333" className="eye-left" />
-                <circle cx="152" cy="42" r="4" fill="#333" className="eye-right" />
+                {/* Eye (side view - only one visible) */}
+                <circle cx="165" cy="45" r="4" fill="#333" className="eye" />
 
-                {/* Smile */}
-                <path
-                    d="M 125 58 Q 140 68 155 58"
-                    stroke="#333"
-                    strokeWidth="3"
-                    fill="none"
-                    className="smile"
-                />
+                {/* Nose (side profile) */}
+                <ellipse cx="175" cy="50" rx="3" ry="6" fill="#654321" className="nose" />
 
-                {/* Proper Baseball Cap */}
-                <path
-                    d="M 105 35 Q 140 15 175 35 Q 175 25 140 25 Q 105 25 105 35"
-                    fill="#ff4444"
+                {/* Michael Jackson Hat (black fedora) */}
+                <ellipse
+                    cx="150"
+                    cy="25"
+                    rx="40"
+                    ry="15"
+                    fill="#1a1a1a"
                     className="hat-top"
                 />
-                {/* Cap visor */}
+                {/* Hat brim */}
                 <ellipse
-                    cx="140"
+                    cx="150"
                     cy="35"
-                    rx="45"
+                    rx="50"
                     ry="8"
-                    fill="#cc3333"
-                    className="hat-visor"
+                    fill="#000"
+                    className="hat-brim"
                 />
+                {/* Hat band */}
+                <rect x="110" y="30" width="80" height="4" fill="#333" className="hat-band" />
 
-                {/* Fat Body */}
+                {/* Body (side view - oval) */}
                 <ellipse
-                    x="90"
-                    y="85"
-                    cx="140"
+                    cx="150"
                     cy="140"
-                    rx="60"
-                    ry="70"
-                    fill="#4ecdc4"
+                    rx="45"
+                    ry="65"
+                    fill="#fff"
+                    stroke="#000"
+                    strokeWidth="3"
                     className="body"
                 />
 
-                {/* ONNWAY Text on torso */}
-                <text
-                    x="140"
-                    y="135"
-                    textAnchor="middle"
-                    fontSize="18"
-                    fontWeight="bold"
-                    fill="#2c3e50"
-                    className="onnway-text"
-                >
-                    ONNWAY
-                </text>
-
-                {/* Left Arm */}
+                {/* Black vest/jacket */}
                 <ellipse
-                    cx="85"
-                    cy="110"
-                    rx="12"
+                    cx="150"
+                    cy="120"
+                    rx="40"
+                    ry="40"
+                    fill="#1a1a1a"
+                    className="jacket"
+                />
+
+                {/* White shirt visible */}
+                <ellipse
+                    cx="150"
+                    cy="130"
+                    rx="30"
                     ry="25"
-                    fill="#ffdbac"
+                    fill="#fff"
+                    className="shirt"
+                />
+
+                {/* Left Arm (closer to viewer) */}
+                <ellipse
+                    cx="110"
+                    cy="120"
+                    rx="12"
+                    ry="35"
+                    fill="#8B4513"
                     className="left-arm"
-                    style={{ transformOrigin: '85px 95px' }}
+                    style={{ transformOrigin: '110px 105px' }}
                 />
 
-                {/* Right Arm */}
+                {/* Right Arm (further from viewer) */}
                 <ellipse
-                    cx="195"
-                    cy="110"
+                    cx="190"
+                    cy="120"
                     rx="12"
-                    ry="25"
-                    fill="#ffdbac"
+                    ry="35"
+                    fill="#8B4513"
                     className="right-arm"
-                    style={{ transformOrigin: '195px 95px' }}
+                    style={{ transformOrigin: '190px 105px' }}
                 />
 
-                {/* Backpack */}
-                <ellipse
-                    cx="140"
-                    cy="90"
-                    rx="35"
-                    ry="25"
-                    fill="#8b4513"
-                    className="backpack"
-                />
+                {/* Hand with ONNWAY text (appears during animation) */}
+                <g className="onnway-hand">
+                    <circle cx="90" cy="80" r="8" fill="#8B4513" />
+                    <text
+                        x="90"
+                        y="60"
+                        textAnchor="middle"
+                        fontSize="16"
+                        fontWeight="bold"
+                        fill="#4ecdc4"
+                        className="onnway-text"
+                    >
+                        ONNWAY
+                    </text>
+                </g>
 
-                {/* Backpack straps */}
-                <rect x="115" y="85" width="6" height="30" fill="#654321" className="strap-left" />
-                <rect x="159" y="85" width="6" height="30" fill="#654321" className="strap-right" />
-
-                {/* Fat Legs */}
+                {/* Left Leg (closer) */}
                 <ellipse
-                    cx="120"
+                    cx="130"
                     cy="240"
-                    rx="18"
-                    ry="45"
-                    fill="#333"
+                    rx="15"
+                    ry="50"
+                    fill="#1a1a1a"
                     className="left-leg"
                 />
 
+                {/* Right Leg (further) */}
                 <ellipse
-                    cx="160"
+                    cx="170"
                     cy="240"
-                    rx="18"
-                    ry="45"
-                    fill="#333"
+                    rx="15"
+                    ry="50"
+                    fill="#1a1a1a"
                     className="right-leg"
                 />
 
-                {/* Feet for moonwalking */}
-                <ellipse cx="120" cy="290" rx="20" ry="8" fill="#8b4513" className="foot-left" />
-                <ellipse cx="160" cy="290" rx="20" ry="8" fill="#8b4513" className="foot-right" />
+                {/* Feet (moonwalk shoes) */}
+                <ellipse cx="130" cy="300" rx="18" ry="8" fill="#000" className="foot-left" />
+                <ellipse cx="170" cy="300" rx="18" ry="8" fill="#000" className="foot-right" />
 
-                {/* Shoe details */}
-                <ellipse cx="120" cy="287" rx="8" ry="3" fill="#654321" />
-                <ellipse cx="160" cy="287" rx="8" ry="3" fill="#654321" />
+                {/* Shoe details (white socks visible) */}
+                <rect x="125" y="290" width="10" height="8" fill="#fff" />
+                <rect x="165" y="290" width="10" height="8" fill="#fff" />
             </svg>
         </div>
     );
