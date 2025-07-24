@@ -1,5 +1,5 @@
 // src/components/RouteDisplay.tsx
-// Component to display the generated route - FRONTEND ONLY SOLUTION
+// Component to display the generated route - FIXED VERSION
 import React, { useState, useEffect } from 'react';
 import { RouteResponse, RouteStopEnhanced, UserLocation } from '../types';
 import RouteMap from './RouteMap';
@@ -21,7 +21,7 @@ const RouteDisplay: React.FC<RouteDisplayProps> = ({ route, userLocation, onCrea
         // Fetch all attractions to get coordinates
         const fetchCoordinates = async () => {
             try {
-                // Get all attractions from your existing API
+                // Get ALL attractions from your API (no filters to avoid 400 error)
                 const allAttractions = await getAttractions();
 
                 // Match route stops with full attraction data
@@ -38,9 +38,10 @@ const RouteDisplay: React.FC<RouteDisplayProps> = ({ route, userLocation, onCrea
                 });
 
                 setEnhancedRoute(enhanced);
+                console.log('Enhanced route with coordinates:', enhanced);
             } catch (error) {
                 console.error('Failed to fetch attraction coordinates:', error);
-                // Fallback: use route without coordinates
+                // Fallback: use route without coordinates (map won't show)
                 setEnhancedRoute(route.optimizedRoute.map(stop => ({ ...stop })));
             }
         };
@@ -65,6 +66,10 @@ const RouteDisplay: React.FC<RouteDisplayProps> = ({ route, userLocation, onCrea
             alert('Route copied to clipboard!');
         }
     };
+
+    // Debug: Check if we have coordinates
+    const hasCoordinates = enhancedRoute.some(stop => stop.latitude && stop.longitude);
+    console.log('Has coordinates for map:', hasCoordinates);
 
     return (
         <div className="route-display">
@@ -92,13 +97,28 @@ const RouteDisplay: React.FC<RouteDisplayProps> = ({ route, userLocation, onCrea
                 </div>
             </div>
 
+            {/* Debug info - remove this later */}
+            <div style={{ background: '#f0f0f0', padding: '10px', margin: '10px 0', borderRadius: '5px' }}>
+                <small>
+                    Debug: Enhanced route loaded: {enhancedRoute.length} stops,
+                    Has coordinates: {hasCoordinates ? 'Yes' : 'No'}
+                    {hasCoordinates && ` (${enhancedRoute.filter(s => s.latitude).length} with coords)`}
+                </small>
+            </div>
+
             {/* Interactive Map - Shows when coordinates are loaded */}
-            {enhancedRoute.some(stop => stop.latitude && stop.longitude) && (
+            {hasCoordinates && (
                 <RouteMap
                     route={enhancedRoute}
                     userLocation={userLocation}
                     onAttractionClick={handleStopClick}
                 />
+            )}
+
+            {!hasCoordinates && (
+                <div style={{ background: '#fff3cd', padding: '15px', margin: '15px 0', borderRadius: '5px', border: '1px solid #ffeaa7' }}>
+                    <p><strong>Map temporarily unavailable</strong> - Could not load attraction coordinates. All other features work normally!</p>
+                </div>
             )}
 
             {/* Route Steps */}
