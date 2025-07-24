@@ -8,211 +8,230 @@
   margin: $spacing-lg 0;
 
   svg {
-    animation: mainBounce 2s ease-in-out infinite;
+    animation: moonwalkSlide 3s ease-in-out infinite;
     filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.1));
   }
 
-  // Head animations
+  // Head bob
   .head {
-    animation: headBob 2s ease-in-out infinite;
+    animation: headBob 1.5s ease-in-out infinite;
   }
 
-  // Eye animations (blinking)
+  // Eye blinking
   .eye-left, .eye-right {
-    animation: eyeBlink 4s ease-in-out infinite;
+    animation: eyeBlink 3s ease-in-out infinite;
   }
 
-  .eye-right {
-    animation-delay: 0.1s;
+  // Hat stays put
+  .hat-top, .hat-visor {
+    animation: hatBob 1.5s ease-in-out infinite;
   }
 
-  // Smile animation
-  .smile {
-    animation: smileGrow 2s ease-in-out infinite;
-  }
-
-  // Hat animation
-  .hat {
-    animation: hatTilt 2s ease-in-out infinite;
-  }
-
-  // Body animation
+  // Body bounce
   .body {
-    animation: bodyStretch 2s ease-in-out infinite;
+    animation: fatBodyBounce 1.5s ease-in-out infinite;
   }
 
-  // Arm animations
+  // ONNWAY text animation
+  .onnway-text {
+    animation: textGlow 2s ease-in-out infinite;
+  }
+
+  // Moonwalk arm movements
   .left-arm {
-    animation: leftArmWave 2s ease-in-out infinite;
+    animation: leftArmMoonwalk 3s ease-in-out infinite;
   }
 
   .right-arm {
-    animation: rightArmWave 2s ease-in-out infinite 0.2s;
+    animation: rightArmMoonwalk 3s ease-in-out infinite;
   }
 
-  // Backpack animations
+  // Backpack sway
   .backpack {
-    animation: backpackWiggle 2s ease-in-out infinite 0.5s;
+    animation: backpackSway 1.5s ease-in-out infinite;
   }
 
-  .strap-left, .strap-right {
-    animation: strapSway 2s ease-in-out infinite 0.7s;
-  }
-
-  // Leg animations
+  // Moonwalk leg movements
   .left-leg {
-    animation: leftLegKick 2s ease-in-out infinite 0.3s;
+    animation: leftLegMoonwalk 3s ease-in-out infinite;
   }
 
   .right-leg {
-    animation: rightLegKick 2s ease-in-out infinite 0.6s;
+    animation: rightLegMoonwalk 3s ease-in-out infinite;
   }
 
-  // Foot animations
-  .foot-left, .foot-right {
-    animation: footTap 2s ease-in-out infinite 0.4s;
+  // Moonwalk feet sliding
+  .foot-left {
+    animation: leftFootSlide 3s ease-in-out infinite;
+  }
+
+  .foot-right {
+    animation: rightFootSlide 3s ease-in-out infinite;
   }
 }
 
-// Main bounce animation
-@keyframes mainBounce {
+// Main moonwalk sliding motion
+@keyframes moonwalkSlide {
   0%, 100% {
-    transform: translateY(0px);
+    transform: translateX(0px);
   }
-  50% {
-    transform: translateY(-10px);
+  25% {
+    transform: translateX(-10px);
+  }
+  75% {
+    transform: translateX(10px);
   }
 }
 
-// Head bob animation
+// Head bobbing
 @keyframes headBob {
   0%, 100% {
     transform: translateY(0px);
   }
   50% {
-    transform: translateY(-3px);
+    transform: translateY(-4px);
   }
 }
 
-// Eye blinking animation
+// Eye blinking
 @keyframes eyeBlink {
-  0%, 90%, 100% {
+  0%, 85%, 100% {
     transform: scaleY(1);
   }
-  95% {
+  90% {
     transform: scaleY(0.1);
   }
 }
 
-// Smile growing animation
-@keyframes smileGrow {
+// Hat bobbing with head
+@keyframes hatBob {
   0%, 100% {
-    transform: scale(1);
+    transform: translateY(0px);
   }
   50% {
-    transform: scale(1.1);
+    transform: translateY(-4px);
   }
 }
 
-// Hat tilting animation
-@keyframes hatTilt {
+// Fat body bouncing
+@keyframes fatBodyBounce {
+  0%, 100% {
+    transform: scaleX(1) scaleY(1);
+  }
+  50% {
+    transform: scaleX(1.05) scaleY(0.95);
+  }
+}
+
+// ONNWAY text glowing
+@keyframes textGlow {
+  0%, 100% {
+    fill: #2c3e50;
+    filter: drop-shadow(0 0 0px #4ecdc4);
+  }
+  50% {
+    fill: #34495e;
+    filter: drop-shadow(0 0 8px #4ecdc4);
+  }
+}
+
+// Moonwalk left arm (Michael Jackson style)
+@keyframes leftArmMoonwalk {
   0%, 100% {
     transform: rotate(0deg);
   }
   25% {
-    transform: rotate(-3deg);
-  }
-  75% {
-    transform: rotate(3deg);
-  }
-}
-
-// Body stretching animation
-@keyframes bodyStretch {
-  0%, 100% {
-    transform: scaleY(1);
+    transform: rotate(-30deg);
   }
   50% {
-    transform: scaleY(0.95);
-  }
-}
-
-// Left arm waving animation
-@keyframes leftArmWave {
-  0%, 100% {
     transform: rotate(0deg);
-  }
-  25% {
-    transform: rotate(-25deg);
   }
   75% {
     transform: rotate(15deg);
   }
 }
 
-// Right arm waving animation
-@keyframes rightArmWave {
+// Moonwalk right arm
+@keyframes rightArmMoonwalk {
   0%, 100% {
     transform: rotate(0deg);
   }
   25% {
-    transform: rotate(25deg);
+    transform: rotate(15deg);
+  }
+  50% {
+    transform: rotate(0deg);
   }
   75% {
-    transform: rotate(-15deg);
+    transform: rotate(-30deg);
   }
 }
 
-// Backpack wiggling animation
-@keyframes backpackWiggle {
+// Backpack gentle sway
+@keyframes backpackSway {
   0%, 100% {
-    transform: translateX(0px) rotate(0deg);
+    transform: rotate(0deg);
+  }
+  50% {
+    transform: rotate(2deg);
+  }
+}
+
+// Left leg moonwalk motion
+@keyframes leftLegMoonwalk {
+  0%, 100% {
+    transform: skewX(0deg) translateX(0px);
   }
   25% {
-    transform: translateX(-2px) rotate(-1deg);
+    transform: skewX(-5deg) translateX(-3px);
   }
   75% {
-    transform: translateX(2px) rotate(1deg);
+    transform: skewX(5deg) translateX(3px);
   }
 }
 
-// Strap swaying animation
-@keyframes strapSway {
+// Right leg moonwalk motion
+@keyframes rightLegMoonwalk {
   0%, 100% {
-    transform: translateX(0px);
+    transform: skewX(0deg) translateX(0px);
   }
-  50% {
-    transform: translateX(1px);
+  25% {
+    transform: skewX(5deg) translateX(3px);
+  }
+  75% {
+    transform: skewX(-5deg) translateX(-3px);
   }
 }
 
-// Left leg kicking animation
-@keyframes leftLegKick {
+// Left foot sliding (moonwalk effect)
+@keyframes leftFootSlide {
   0%, 100% {
-    transform: rotate(0deg);
+    transform: translateX(0px) scaleX(1);
+  }
+  25% {
+    transform: translateX(-8px) scaleX(1.2);
   }
   50% {
-    transform: rotate(5deg);
+    transform: translateX(0px) scaleX(1);
+  }
+  75% {
+    transform: translateX(4px) scaleX(0.9);
   }
 }
 
-// Right leg kicking animation
-@keyframes rightLegKick {
+// Right foot sliding
+@keyframes rightFootSlide {
   0%, 100% {
-    transform: rotate(0deg);
+    transform: translateX(0px) scaleX(1);
+  }
+  25% {
+    transform: translateX(4px) scaleX(0.9);
   }
   50% {
-    transform: rotate(-5deg);
+    transform: translateX(0px) scaleX(1);
   }
-}
-
-// Foot tapping animation
-@keyframes footTap {
-  0%, 100% {
-    transform: translateY(0px);
-  }
-  50% {
-    transform: translateY(-2px);
+  75% {
+    transform: translateX(-8px) scaleX(1.2);
   }
 }
 
@@ -220,8 +239,12 @@
 @media (max-width: $mobile) {
   .dancing-tourist {
     svg {
-      width: 150px;
-      height: 190px;
+      width: 200px;
+      height: 240px;
+    }
+
+    .onnway-text {
+      font-size: 14px;
     }
   }
 }
@@ -233,14 +256,13 @@
     .head,
     .eye-left,
     .eye-right,
-    .smile,
-    .hat,
+    .hat-top,
+    .hat-visor,
     .body,
+    .onnway-text,
     .left-arm,
     .right-arm,
     .backpack,
-    .strap-left,
-    .strap-right,
     .left-leg,
     .right-leg,
     .foot-left,
