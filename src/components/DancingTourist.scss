@@ -22,6 +22,11 @@
     animation: moonwalkSlide 4s ease-in-out infinite;
     filter: drop-shadow(0 8px 16px rgba(0, 0, 0, 0.2));
     z-index: 10;
+
+    // Make background seamlessly blend with modal
+    background: #ffffff; // Match your modal background exactly
+    border-radius: 10px; // Subtle rounding to blend better
+    padding: 10px; // Small padding for natural look
   }
 
   // ONNWAY text above the pointing finger
@@ -200,8 +205,8 @@
   .dancing-tourist {
     .moonwalk-character,
     .onnway-text,
-    .moonwalk-trail,
-    .trail-dot {
+    .moonwalk-effects,
+    .dust-cloud {
       animation: none;
     }
 
@@ -210,7 +215,7 @@
       transform: none;
     }
 
-    .moonwalk-trail {
+    .moonwalk-effects {
       opacity: 0.6;
     }
   }
