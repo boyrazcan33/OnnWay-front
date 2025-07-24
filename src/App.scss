@@ -26,11 +26,34 @@ body {
     text-align: center;
     box-shadow: $box-shadow;
 
-    h1 {
-      margin: 0 0 $spacing-sm 0;
-      font-size: 2.5rem;
-      color: $dark-gray;
-      font-weight: 700;
+    .header-content {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 11rem;
+      margin-bottom: $spacing-sm;
+
+      .greeting {
+        font-size: $font-size-xl;
+        font-weight: 600;
+        color: $primary-color;
+        animation: cheerfulWave 3s ease-in-out infinite;
+
+        &.left {
+          animation-delay: 0s;
+        }
+
+        &.right {
+          animation-delay: 1.5s;
+        }
+      }
+
+      h1 {
+        margin: 0;
+        font-size: 2.5rem;
+        color: $dark-gray;
+        font-weight: 700;
+      }
     }
 
     p {
@@ -138,6 +161,22 @@ body {
   }
 }
 
+// Cheerful wave animation for greetings
+@keyframes cheerfulWave {
+  0%, 100% {
+    transform: scale(1) rotate(0deg);
+  }
+  25% {
+    transform: scale(1.1) rotate(-5deg);
+  }
+  50% {
+    transform: scale(1.05) rotate(0deg);
+  }
+  75% {
+    transform: scale(1.1) rotate(5deg);
+  }
+}
+
 // Spinner animation
 @keyframes spin {
   0% { transform: rotate(0deg); }
@@ -150,8 +189,17 @@ body {
     .app-header {
       padding: $spacing-md;
 
-      h1 {
-        font-size: 2rem;
+      .header-content {
+        flex-direction: column;
+        gap: $spacing-sm;
+
+        .greeting {
+          font-size: $font-size-base;
+        }
+
+        h1 {
+          font-size: 2rem;
+        }
       }
 
       p {

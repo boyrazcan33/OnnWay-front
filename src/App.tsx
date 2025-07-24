@@ -1,4 +1,4 @@
-// src/App.tsx - Updated with LoadingModal
+// src/App.tsx - Updated with cultural greetings in header
 import React, { useState } from 'react';
 import { useLocation } from './hooks/useLocation';
 import { createRoute } from './services/api';
@@ -129,7 +129,11 @@ function App() {
   return (
       <div className="app">
         <header className="app-header">
-          <h1>🗺️ OnnWay</h1>
+          <div className="header-content">
+            <span className="greeting left">🇪🇪 Tere!</span>
+            <h1>🗺️ OnnWay</h1>
+            <span className="greeting right">Merhaba! 🇹🇷</span>
+          </div>
           <p>Create optimized tourism routes for Istanbul and Tallinn</p>
         </header>
 
