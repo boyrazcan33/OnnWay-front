@@ -19,54 +19,99 @@ const RouteMap: React.FC<RouteMapProps> = ({ route, userLocation, onAttractionCl
     const mapRef = useRef<HTMLDivElement>(null);
     const mapInstanceRef = useRef<any>(null);
     const [selectedStop, setSelectedStop] = useState<RouteStopEnhanced | null>(null);
+    const [leafletLoaded, setLeafletLoaded] = useState(false);
 
+    // Load Leaflet library
     useEffect(() => {
-        if (!mapRef.current) return;
+        if (window.L) {
+            setLeafletLoaded(true);
+            return;
+        }
 
-        // Load Leaflet CSS and JS
+        // Load Leaflet CSS
         const link = document.createElement('link');
         link.rel = 'stylesheet';
         link.href = 'https://unpkg.com/leaflet@1.9.4/dist/leaflet.css';
-        document.head.appendChild(link);
+        link.id = 'leaflet-css';
+        if (!document.getElementById('leaflet-css')) {
+            document.head.appendChild(link);
+        }
 
+        // Load Leaflet JS
         const script = document.createElement('script');
         script.src = 'https://unpkg.com/leaflet@1.9.4/dist/leaflet.js';
-        script.onload = initializeMap;
-        document.head.appendChild(script);
+        script.id = 'leaflet-js';
+        script.onload = () => {
+            setLeafletLoaded(true);
+        };
 
+        if (!document.getElementById('leaflet-js')) {
+            document.head.appendChild(script);
+        }
+    }, []);
+
+    // Initialize map when Leaflet is loaded
+    useEffect(() => {
+        if (!leafletLoaded || !mapRef.current || !window.L) return;
+
+        // Clean up existing map instance
+        if (mapInstanceRef.current) {
+            mapInstanceRef.current.remove();
+            mapInstanceRef.current = null;
+        }
+
+        // Initialize new map
+        try {
+            const map = window.L.map(mapRef.current, {
+                center: [userLocation.lat, userLocation.lon],
+                zoom: 13,
+                zoomControl: true,
+                attributionControl: true
+            });
+
+            mapInstanceRef.current = map;
+
+            // Add tile layer
+            window.L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: '© OpenStreetMap contributors',
+                maxZoom: 19
+            }).addTo(map);
+
+            // Add user location marker
+            const userIcon = window.L.divIcon({
+                html: '<div class="user-marker">📍</div>',
+                className: 'custom-marker',
+                iconSize: [30, 30],
+                iconAnchor: [15, 15]
+            });
+
+            window.L.marker([userLocation.lat, userLocation.lon], { icon: userIcon })
+                .addTo(map)
+                .bindPopup('Your Location');
+
+            // Add route markers and polyline
+            addRouteToMap(map);
+
+        } catch (error) {
+            console.error('Error initializing map:', error);
+        }
+
+        // Cleanup function
         return () => {
             if (mapInstanceRef.current) {
                 mapInstanceRef.current.remove();
+                mapInstanceRef.current = null;
             }
         };
-    }, []);
+    }, [leafletLoaded, userLocation, route]);
 
-    const initializeMap = () => {
-        if (!window.L || !mapRef.current) return;
+    const addRouteToMap = (map: any) => {
+        if (!map || !window.L) return;
 
-        // Initialize map
-        const map = window.L.map(mapRef.current).setView([userLocation.lat, userLocation.lon], 13);
-        mapInstanceRef.current = map;
-
-        // Add tile layer
-        window.L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-            attribution: '© OpenStreetMap contributors'
-        }).addTo(map);
-
-        // Add user location marker
-        const userIcon = window.L.divIcon({
-            html: '<div class="user-marker">📍</div>',
-            className: 'custom-marker',
-            iconSize: [30, 30],
-            iconAnchor: [15, 15]
-        });
-
-        window.L.marker([userLocation.lat, userLocation.lon], { icon: userIcon })
-            .addTo(map)
-            .bindPopup('Your Location');
+        const routeCoordinates = [[userLocation.lat, userLocation.lon]];
 
         // Add route markers
-        route.forEach((stop, index) => {
+        route.forEach((stop) => {
             if (stop.latitude && stop.longitude) {
                 const stopIcon = window.L.divIcon({
                     html: `<div class="stop-marker">${stop.order}</div>`,
@@ -83,26 +128,23 @@ const RouteMap: React.FC<RouteMapProps> = ({ route, userLocation, onAttractionCl
                     setSelectedStop(stop);
                     onAttractionClick?.(stop);
                 });
+
+                routeCoordinates.push([stop.latitude, stop.longitude]);
             }
         });
 
-        // Create route polyline
-        const routeCoordinates = [
-            [userLocation.lat, userLocation.lon],
-            ...route.filter(stop => stop.latitude && stop.longitude)
-                .map(stop => [stop.latitude!, stop.longitude!])
-        ];
-
+        // Add route polyline
         if (routeCoordinates.length > 1) {
             window.L.polyline(routeCoordinates, {
                 color: '#007bff',
                 weight: 4,
-                opacity: 0.7
+                opacity: 0.7,
+                smoothFactor: 1
             }).addTo(map);
         }
 
-        // Fit map to show all points
-        if (routeCoordinates.length > 0) {
+        // Fit map to show all points with padding
+        if (routeCoordinates.length > 1) {
             const group = new window.L.featureGroup(
                 routeCoordinates.map(coord => window.L.marker(coord))
             );
@@ -112,8 +154,11 @@ const RouteMap: React.FC<RouteMapProps> = ({ route, userLocation, onAttractionCl
 
     const openInMaps = () => {
         const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
-        const waypoints = route
-            .filter(stop => stop.latitude && stop.longitude)
+        const validStops = route.filter(stop => stop.latitude && stop.longitude);
+
+        if (validStops.length === 0) return;
+
+        const waypoints = validStops
             .map(stop => `${stop.latitude},${stop.longitude}`)
             .join('|');
 
@@ -134,6 +179,27 @@ const RouteMap: React.FC<RouteMapProps> = ({ route, userLocation, onAttractionCl
             window.open(streetViewUrl, '_blank');
         }
     };
+
+    if (!leafletLoaded) {
+        return (
+            <div className="route-map">
+                <div className="map-header">
+                    <h3>📍 Loading Map...</h3>
+                </div>
+                <div className="map-container">
+                    <div className="map" style={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        background: '#f0f0f0',
+                        color: '#666'
+                    }}>
+                        Loading map library...
+                    </div>
+                </div>
+            </div>
+        );
+    }
 
     return (
         <div className="route-map">
