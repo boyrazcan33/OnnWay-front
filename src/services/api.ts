@@ -1,9 +1,8 @@
 // src/services/api.ts
 // API calls to backend
 import axios from 'axios';
-import { RouteRequest, RouteResponse } from '../types';
+import { RouteRequest, RouteResponse, City, ActivityType, BudgetRange, Duration, Attraction } from '../types';
 
-// Backend URL - change this to your backend URL
 const API_BASE_URL = 'http://localhost:8080/api';
 
 const api = axios.create({
@@ -21,6 +20,28 @@ export const createRoute = async (request: RouteRequest): Promise<RouteResponse>
     } catch (error) {
         console.error('Error creating route:', error);
         throw new Error('Failed to create route. Please try again.');
+    }
+};
+
+// Get attractions with coordinates - NEW FUNCTION
+export const getAttractions = async (
+    city?: City,
+    activity?: ActivityType,
+    budget?: BudgetRange,
+    duration?: Duration
+): Promise<Attraction[]> => {
+    try {
+        const params = new URLSearchParams();
+        if (city) params.append('city', city);
+        if (activity) params.append('activity', activity);
+        if (budget) params.append('budget', budget);
+        if (duration) params.append('duration', duration);
+
+        const response = await api.get<Attraction[]>(`/attractions?${params.toString()}`);
+        return response.data;
+    } catch (error) {
+        console.error('Error fetching attractions:', error);
+        throw new Error('Failed to fetch attractions.');
     }
 };
 
