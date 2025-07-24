@@ -1,0 +1,251 @@
+// src/components/DancingTourist.scss
+@import '../styles/variables';
+
+.dancing-tourist {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: $spacing-lg 0;
+
+  svg {
+    animation: mainBounce 2s ease-in-out infinite;
+    filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.1));
+  }
+
+  // Head animations
+  .head {
+    animation: headBob 2s ease-in-out infinite;
+  }
+
+  // Eye animations (blinking)
+  .eye-left, .eye-right {
+    animation: eyeBlink 4s ease-in-out infinite;
+  }
+
+  .eye-right {
+    animation-delay: 0.1s;
+  }
+
+  // Smile animation
+  .smile {
+    animation: smileGrow 2s ease-in-out infinite;
+  }
+
+  // Hat animation
+  .hat {
+    animation: hatTilt 2s ease-in-out infinite;
+  }
+
+  // Body animation
+  .body {
+    animation: bodyStretch 2s ease-in-out infinite;
+  }
+
+  // Arm animations
+  .left-arm {
+    animation: leftArmWave 2s ease-in-out infinite;
+  }
+
+  .right-arm {
+    animation: rightArmWave 2s ease-in-out infinite 0.2s;
+  }
+
+  // Backpack animations
+  .backpack {
+    animation: backpackWiggle 2s ease-in-out infinite 0.5s;
+  }
+
+  .strap-left, .strap-right {
+    animation: strapSway 2s ease-in-out infinite 0.7s;
+  }
+
+  // Leg animations
+  .left-leg {
+    animation: leftLegKick 2s ease-in-out infinite 0.3s;
+  }
+
+  .right-leg {
+    animation: rightLegKick 2s ease-in-out infinite 0.6s;
+  }
+
+  // Foot animations
+  .foot-left, .foot-right {
+    animation: footTap 2s ease-in-out infinite 0.4s;
+  }
+}
+
+// Main bounce animation
+@keyframes mainBounce {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+// Head bob animation
+@keyframes headBob {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-3px);
+  }
+}
+
+// Eye blinking animation
+@keyframes eyeBlink {
+  0%, 90%, 100% {
+    transform: scaleY(1);
+  }
+  95% {
+    transform: scaleY(0.1);
+  }
+}
+
+// Smile growing animation
+@keyframes smileGrow {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+}
+
+// Hat tilting animation
+@keyframes hatTilt {
+  0%, 100% {
+    transform: rotate(0deg);
+  }
+  25% {
+    transform: rotate(-3deg);
+  }
+  75% {
+    transform: rotate(3deg);
+  }
+}
+
+// Body stretching animation
+@keyframes bodyStretch {
+  0%, 100% {
+    transform: scaleY(1);
+  }
+  50% {
+    transform: scaleY(0.95);
+  }
+}
+
+// Left arm waving animation
+@keyframes leftArmWave {
+  0%, 100% {
+    transform: rotate(0deg);
+  }
+  25% {
+    transform: rotate(-25deg);
+  }
+  75% {
+    transform: rotate(15deg);
+  }
+}
+
+// Right arm waving animation
+@keyframes rightArmWave {
+  0%, 100% {
+    transform: rotate(0deg);
+  }
+  25% {
+    transform: rotate(25deg);
+  }
+  75% {
+    transform: rotate(-15deg);
+  }
+}
+
+// Backpack wiggling animation
+@keyframes backpackWiggle {
+  0%, 100% {
+    transform: translateX(0px) rotate(0deg);
+  }
+  25% {
+    transform: translateX(-2px) rotate(-1deg);
+  }
+  75% {
+    transform: translateX(2px) rotate(1deg);
+  }
+}
+
+// Strap swaying animation
+@keyframes strapSway {
+  0%, 100% {
+    transform: translateX(0px);
+  }
+  50% {
+    transform: translateX(1px);
+  }
+}
+
+// Left leg kicking animation
+@keyframes leftLegKick {
+  0%, 100% {
+    transform: rotate(0deg);
+  }
+  50% {
+    transform: rotate(5deg);
+  }
+}
+
+// Right leg kicking animation
+@keyframes rightLegKick {
+  0%, 100% {
+    transform: rotate(0deg);
+  }
+  50% {
+    transform: rotate(-5deg);
+  }
+}
+
+// Foot tapping animation
+@keyframes footTap {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-2px);
+  }
+}
+
+// Responsive design
+@media (max-width: $mobile) {
+  .dancing-tourist {
+    svg {
+      width: 150px;
+      height: 190px;
+    }
+  }
+}
+
+// Reduced motion accessibility
+@media (prefers-reduced-motion: reduce) {
+  .dancing-tourist {
+    svg,
+    .head,
+    .eye-left,
+    .eye-right,
+    .smile,
+    .hat,
+    .body,
+    .left-arm,
+    .right-arm,
+    .backpack,
+    .strap-left,
+    .strap-right,
+    .left-leg,
+    .right-leg,
+    .foot-left,
+    .foot-right {
+      animation: none;
+    }
+  }
+}
