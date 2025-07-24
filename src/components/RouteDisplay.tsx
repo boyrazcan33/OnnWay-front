@@ -97,14 +97,6 @@ const RouteDisplay: React.FC<RouteDisplayProps> = ({ route, userLocation, onCrea
                 </div>
             </div>
 
-            {/* Debug info - remove this later */}
-            <div style={{ background: '#f0f0f0', padding: '10px', margin: '10px 0', borderRadius: '5px' }}>
-                <small>
-                    Debug: Enhanced route loaded: {enhancedRoute.length} stops,
-                    Has coordinates: {hasCoordinates ? 'Yes' : 'No'}
-                    {hasCoordinates && ` (${enhancedRoute.filter(s => s.latitude).length} with coords)`}
-                </small>
-            </div>
 
             {/* Interactive Map - Shows when coordinates are loaded */}
             {hasCoordinates && (
