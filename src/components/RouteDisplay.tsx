@@ -1,15 +1,71 @@
 // src/components/RouteDisplay.tsx
-// Component to display the generated route
-import React from 'react';
-import { RouteResponse } from '../types';
+// Component to display the generated route - FRONTEND ONLY SOLUTION
+import React, { useState, useEffect } from 'react';
+import { RouteResponse, RouteStopEnhanced, UserLocation } from '../types';
+import RouteMap from './RouteMap';
+import AttractionDetails from './AttractionDetails';
+import { getAttractions } from '../services/api';
 import './RouteDisplay.scss';
 
 interface RouteDisplayProps {
     route: RouteResponse;
+    userLocation: UserLocation;
     onCreateNew: () => void;
 }
 
-const RouteDisplay: React.FC<RouteDisplayProps> = ({ route, onCreateNew }) => {
+const RouteDisplay: React.FC<RouteDisplayProps> = ({ route, userLocation, onCreateNew }) => {
+    const [selectedStop, setSelectedStop] = useState<RouteStopEnhanced | null>(null);
+    const [enhancedRoute, setEnhancedRoute] = useState<RouteStopEnhanced[]>([]);
+
+    useEffect(() => {
+        // Fetch all attractions to get coordinates
+        const fetchCoordinates = async () => {
+            try {
+                // Get all attractions from your existing API
+                const allAttractions = await getAttractions();
+
+                // Match route stops with full attraction data
+                const enhanced = route.optimizedRoute.map(stop => {
+                    const fullAttraction = allAttractions.find(
+                        attraction => attraction.name === stop.name
+                    );
+
+                    return {
+                        ...stop,
+                        latitude: fullAttraction?.latitude,
+                        longitude: fullAttraction?.longitude
+                    };
+                });
+
+                setEnhancedRoute(enhanced);
+            } catch (error) {
+                console.error('Failed to fetch attraction coordinates:', error);
+                // Fallback: use route without coordinates
+                setEnhancedRoute(route.optimizedRoute.map(stop => ({ ...stop })));
+            }
+        };
+
+        fetchCoordinates();
+    }, [route]);
+
+    const handleStopClick = (stop: RouteStopEnhanced) => {
+        setSelectedStop(stop);
+    };
+
+    const shareRoute = () => {
+        if (navigator.share) {
+            navigator.share({
+                title: 'My Tourism Route',
+                text: `Check out my optimized route: ${route.totalDistance}, ${route.totalDuration}`,
+                url: window.location.href
+            });
+        } else {
+            const routeText = `My Tourism Route:\n${enhancedRoute.map(stop => `${stop.order}. ${stop.name}`).join('\n')}`;
+            navigator.clipboard.writeText(routeText);
+            alert('Route copied to clipboard!');
+        }
+    };
+
     return (
         <div className="route-display">
             {/* Route Summary */}
@@ -29,16 +85,31 @@ const RouteDisplay: React.FC<RouteDisplayProps> = ({ route, onCreateNew }) => {
                         <span className="value">${route.totalCost}</span>
                     </div>
                 </div>
+                <div className="summary-actions">
+                    <button className="share-btn" onClick={shareRoute}>
+                        📤 Share Route
+                    </button>
+                </div>
             </div>
+
+            {/* Interactive Map - Shows when coordinates are loaded */}
+            {enhancedRoute.some(stop => stop.latitude && stop.longitude) && (
+                <RouteMap
+                    route={enhancedRoute}
+                    userLocation={userLocation}
+                    onAttractionClick={handleStopClick}
+                />
+            )}
 
             {/* Route Steps */}
             <div className="route-steps">
                 <h3>Route Steps</h3>
-                {route.optimizedRoute.map((stop, index) => (
-                    <div key={stop.order} className="route-step">
+                {enhancedRoute.map((stop) => (
+                    <div key={stop.order} className="route-step" onClick={() => handleStopClick(stop)}>
                         <div className="step-number">
                             {stop.order}
                         </div>
+
                         <div className="step-content">
                             <div className="step-header">
                                 <h4>{stop.name}</h4>
@@ -50,6 +121,9 @@ const RouteDisplay: React.FC<RouteDisplayProps> = ({ route, onCreateNew }) => {
                             </div>
                             <p className="address">📍 {stop.address}</p>
                             <p className="description">{stop.description}</p>
+                            <button className="details-btn">
+                                View Details →
+                            </button>
                         </div>
                     </div>
                 ))}
@@ -61,6 +135,14 @@ const RouteDisplay: React.FC<RouteDisplayProps> = ({ route, onCreateNew }) => {
                     Create New Route
                 </button>
             </div>
+
+            {/* Attraction Details Modal */}
+            {selectedStop && (
+                <AttractionDetails
+                    stop={selectedStop}
+                    onClose={() => setSelectedStop(null)}
+                />
+            )}
         </div>
     );
 };
