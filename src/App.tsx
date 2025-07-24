@@ -124,6 +124,7 @@ function App() {
           {route ? (
               <RouteDisplay
                   route={route}
+                  userLocation={location!}  // FIXED: Added userLocation prop
                   onCreateNew={handleCreateNew}
               />
           ) : (
