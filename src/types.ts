@@ -65,3 +65,24 @@ export interface FormState {
     budget: BudgetRange | null;
     duration: Duration | null;
 }
+
+// Enhanced interfaces for new features
+export interface RouteStopEnhanced extends RouteStop {
+    latitude?: number;
+    longitude?: number;
+}
+
+// Interface for full attraction data from backend
+export interface Attraction {
+    id: number;
+    name: string;
+    address: string;
+    description: string;
+    latitude: number;
+    longitude: number;
+    city: string;
+    activity_type: string;
+    budget_range: string;
+    estimated_duration: number;
+    avg_cost: number;
+}
