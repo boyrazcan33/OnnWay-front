@@ -1,10 +1,10 @@
-// src/App.tsx
-// Main application component
+// src/App.tsx - Updated with LoadingModal
 import React, { useState } from 'react';
 import { useLocation } from './hooks/useLocation';
 import { createRoute } from './services/api';
 import CitySelector from './components/CitySelector';
 import RouteDisplay from './components/RouteDisplay';
+import LoadingModal from './components/LoadingModal';
 import { City, ActivityType, BudgetRange, Duration, FormState, RouteResponse, RouteRequest } from './types';
 import './App.scss';
 
@@ -25,7 +25,10 @@ function App() {
   const [routeLoading, setRouteLoading] = useState(false);
   const [routeError, setRouteError] = useState<string | null>(null);
 
-  // Handle city selection - blur the other side
+  // Loading modal state
+  const [showLoadingModal, setShowLoadingModal] = useState(false);
+
+  // Handle city selection
   const handleCitySelect = (city: City) => {
     setFormState({
       selectedCity: city,
@@ -46,12 +49,14 @@ function App() {
     }));
   };
 
-  // Handle route creation
+  // Handle route creation with loading modal
   const handleApply = async () => {
     if (!location || !formState.selectedCity || !formState.activity || !formState.budget || !formState.duration) {
       return;
     }
 
+    // Show loading modal and set loading states
+    setShowLoadingModal(true);
     setRouteLoading(true);
     setRouteError(null);
 
@@ -70,6 +75,8 @@ function App() {
     } catch (error) {
       setRouteError(error instanceof Error ? error.message : 'Failed to create route');
     } finally {
+      // Hide loading modal and reset loading state
+      setShowLoadingModal(false);
       setRouteLoading(false);
     }
   };
@@ -84,6 +91,13 @@ function App() {
       budget: null,
       duration: null
     });
+  };
+
+  // Handle loading modal cancel
+  const handleCancelLoading = () => {
+    setShowLoadingModal(false);
+    setRouteLoading(false);
+    // Note: In a real app, you'd also cancel the API request here
   };
 
   // Show loading spinner while getting location
@@ -115,7 +129,7 @@ function App() {
   return (
       <div className="app">
         <header className="app-header">
-          <h1>🗺️ OnnWay </h1>
+          <h1>🗺️ OnnWay</h1>
           <p>Create optimized tourism routes for Istanbul and Tallinn</p>
         </header>
 
@@ -124,7 +138,7 @@ function App() {
           {route ? (
               <RouteDisplay
                   route={route}
-                  userLocation={location!}  // FIXED: Added userLocation prop
+                  userLocation={location!}
                   onCreateNew={handleCreateNew}
               />
           ) : (
@@ -150,6 +164,12 @@ function App() {
         <footer className="app-footer">
           <p>Built with React, TypeScript & SCSS</p>
         </footer>
+
+        {/* Loading Modal with Dancing Tourist */}
+        <LoadingModal
+            isVisible={showLoadingModal}
+            onClose={handleCancelLoading}
+        />
       </div>
   );
 }
