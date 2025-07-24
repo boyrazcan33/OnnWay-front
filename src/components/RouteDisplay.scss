@@ -3,7 +3,7 @@
 
 .route-display {
   padding: $spacing-lg;
-  max-width: 800px;
+  max-width: 900px;
   margin: 0 auto;
 
   .route-summary {
@@ -24,6 +24,7 @@
       display: grid;
       grid-template-columns: repeat(3, 1fr);
       gap: $spacing-lg;
+      margin-bottom: $spacing-lg;
 
       .stat {
         display: flex;
@@ -45,6 +46,24 @@
         }
       }
     }
+
+    .summary-actions {
+      .share-btn {
+        background: $secondary-color;
+        color: $white;
+        border: none;
+        padding: $spacing-sm $spacing-lg;
+        border-radius: $border-radius;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.2s ease;
+
+        &:hover {
+          background: darken($secondary-color, 10%);
+          transform: translateY(-1px);
+        }
+      }
+    }
   }
 
   .route-steps {
@@ -56,16 +75,20 @@
     }
 
     .route-step {
-      display: flex;
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: $spacing-lg;
       background: $white;
       border-radius: $border-radius;
       margin-bottom: $spacing-md;
       padding: $spacing-lg;
       box-shadow: $box-shadow;
-      transition: transform 0.2s ease;
+      transition: all 0.3s ease;
+      cursor: pointer;
 
       &:hover {
         transform: translateY(-2px);
+        box-shadow: $box-shadow-lg;
       }
 
       .step-number {
@@ -79,13 +102,11 @@
         border-radius: 50%;
         font-weight: 700;
         font-size: $font-size-lg;
-        margin-right: $spacing-lg;
         flex-shrink: 0;
+        align-self: flex-start;
       }
 
       .step-content {
-        flex: 1;
-
         .step-header {
           display: flex;
           justify-content: space-between;
@@ -138,9 +159,26 @@
         }
 
         .description {
-          margin: 0;
+          margin: 0 0 $spacing-md 0;
           color: $dark-gray;
           line-height: 1.5;
+        }
+
+        .details-btn {
+          background: transparent;
+          color: $primary-color;
+          border: 1px solid $primary-color;
+          padding: $spacing-xs $spacing-md;
+          border-radius: $border-radius-sm;
+          font-size: $font-size-sm;
+          font-weight: 600;
+          cursor: pointer;
+          transition: all 0.2s ease;
+
+          &:hover {
+            background: $primary-color;
+            color: $white;
+          }
         }
       }
     }
@@ -180,23 +218,32 @@
     }
 
     .route-steps .route-step {
-      flex-direction: column;
+      grid-template-columns: 1fr;
+      gap: $spacing-md;
+      text-align: center;
 
       .step-number {
-        align-self: flex-start;
-        margin-bottom: $spacing-md;
-        margin-right: 0;
+        justify-self: center;
+        margin-bottom: $spacing-sm;
       }
 
       .step-content .step-header {
         flex-direction: column;
-        align-items: flex-start;
+        align-items: center;
+        text-align: center;
 
         .step-meta {
           margin-top: $spacing-sm;
-          align-items: flex-start;
+          align-items: center;
         }
       }
     }
+  }
+}
+
+// Tablet responsiveness
+@media (max-width: $tablet) and (min-width: $mobile + 1px) {
+  .route-display .route-steps .route-step {
+    grid-template-columns: auto 1fr;
   }
 }
