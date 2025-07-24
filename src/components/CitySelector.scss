@@ -102,14 +102,13 @@
       background-position: center;
       background-repeat: no-repeat;
 
+      // Original code that referenced actual image files:
       &.tallinn {
-        background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)),
-        url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300"><rect width="400" height="300" fill="%23667eea"/><circle cx="100" cy="100" r="50" fill="%23764ba2" opacity="0.7"/><circle cx="300" cy="200" r="40" fill="%23764ba2" opacity="0.5"/></svg>');
+        background-image: url('../images/tallinn.jpg');
       }
 
       &.istanbul {
-        background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)),
-        url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300"><rect width="400" height="300" fill="%23e74c3c"/><circle cx="150" cy="150" r="60" fill="%23c0392b" opacity="0.7"/><circle cx="350" cy="80" r="35" fill="%23c0392b" opacity="0.5"/></svg>');
+        background-image: url('../images/istanbul.jpg');
       }
     }
   }

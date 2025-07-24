@@ -23,19 +23,19 @@ export const createRoute = async (request: RouteRequest): Promise<RouteResponse>
     }
 };
 
-// Get attractions with coordinates - NEW FUNCTION
+// Get attractions with coordinates - FIXED VERSION
 export const getAttractions = async (
     city?: City,
     activity?: ActivityType,
-    budget?: BudgetRange,
-    duration?: Duration
+    budget?: BudgetRange
+    // Removed duration parameter - your backend doesn't support it
 ): Promise<Attraction[]> => {
     try {
         const params = new URLSearchParams();
         if (city) params.append('city', city);
         if (activity) params.append('activity', activity);
         if (budget) params.append('budget', budget);
-        if (duration) params.append('duration', duration);
+        // Removed duration from params
 
         const response = await api.get<Attraction[]>(`/attractions?${params.toString()}`);
         return response.data;
