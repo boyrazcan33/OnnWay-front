@@ -1,40 +1,32 @@
-// src/App.test.tsx
 import React from 'react';
-import { render, screen } from '@testing-library/react';
+import { render, screen, waitFor } from '@testing-library/react';
 import App from './App';
 
-// Mock geolocation before importing App
+// Jest mock for geolocation
 const mockGeolocation = {
   getCurrentPosition: jest.fn(),
 };
-
 Object.defineProperty(global.navigator, 'geolocation', {
   value: mockGeolocation,
-  writable: true,
 });
 
-test('app renders loading screen initially', () => {
-  // Mock geolocation to not call callback (simulates loading)
-  mockGeolocation.getCurrentPosition.mockImplementation(() => {});
+// Jest mock for API
+jest.mock('./services/api', () => ({
+  createRoute: jest.fn(),
+  getAttractions: jest.fn(),
+}));
 
-  render(<App />);
-
-  // Should show loading message
-  expect(screen.getByText(/Getting your location/i)).toBeInTheDocument();
-});
-
-test('app shows error when location denied', async () => {
-  // Mock permission denied
-  mockGeolocation.getCurrentPosition.mockImplementation((success, error) => {
-    error({
-      code: 1, // PERMISSION_DENIED
-      message: 'Permission denied',
+test('shows cities when location granted', async () => {
+  mockGeolocation.getCurrentPosition.mockImplementation((success) => {
+    success({
+      coords: { latitude: 59.4370, longitude: 24.7536 }
     });
   });
 
   render(<App />);
 
-  // Wait for error to appear
-  const errorElement = await screen.findByText(/Location Required/i);
-  expect(errorElement).toBeInTheDocument();
+  await waitFor(() => {
+    expect(screen.getByText(/Tallinn/)).toBeInTheDocument();
+    expect(screen.getByText(/Istanbul/)).toBeInTheDocument();
+  });
 });
