@@ -6,231 +6,191 @@
   justify-content: center;
   align-items: center;
   margin: $spacing-lg 0;
+  position: relative;
 
-  svg {
-    animation: moonwalkBackward 4s ease-in-out infinite;
-    filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.2));
+  .character-container {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
 
-  // Head movement
-  .head {
-    animation: headTilt 2s ease-in-out infinite;
+  // Main character animation - moonwalk slide
+  .moonwalk-character {
+    width: 280px;
+    height: auto;
+    animation: moonwalkSlide 4s ease-in-out infinite;
+    filter: drop-shadow(0 8px 16px rgba(0, 0, 0, 0.2));
+    z-index: 10;
   }
 
-  // Eye
-  .eye {
-    animation: eyeBlink 3s ease-in-out infinite;
-  }
-
-  // Hat stays with head
-  .hat-top, .hat-brim, .hat-band {
-    animation: headTilt 2s ease-in-out infinite;
-  }
-
-  // Body lean during moonwalk
-  .body, .jacket, .shirt {
-    animation: bodyLean 4s ease-in-out infinite;
-  }
-
-  // Left arm moonwalk motion
-  .left-arm {
-    animation: leftArmMoonwalk 4s ease-in-out infinite;
-  }
-
-  // Right arm - shows ONNWAY at the end
-  .right-arm {
-    animation: rightArmMoonwalk 4s ease-in-out infinite;
-  }
-
-  // ONNWAY hand appears during final move
-  .onnway-hand {
+  // ONNWAY text above the pointing finger
+  .onnway-text {
+    position: absolute;
+    top: -30px;
+    right: 60px; // Position above the pointing finger
     animation: onnwayReveal 4s ease-in-out infinite;
+    z-index: 20;
+
+    span {
+      display: inline-block;
+      font-size: 18px;
+      font-weight: bold;
+      color: #4ecdc4;
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+      background: rgba(255, 255, 255, 0.9);
+      padding: 8px 12px;
+      border-radius: 20px;
+      border: 2px solid #4ecdc4;
+      animation: textPulse 1s ease-in-out infinite;
+    }
   }
 
-  // Left leg moonwalk (classic MJ style)
-  .left-leg {
-    animation: leftLegMoonwalk 4s ease-in-out infinite;
-  }
+  // Moonwalk dust effects to simulate sliding feet
+  .moonwalk-effects {
+    position: absolute;
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100px;
+    height: 20px;
 
-  // Right leg moonwalk
-  .right-leg {
-    animation: rightLegMoonwalk 4s ease-in-out infinite;
-  }
+    .dust-cloud {
+      position: absolute;
+      width: 8px;
+      height: 8px;
+      background: rgba(200, 200, 200, 0.6);
+      border-radius: 50%;
+      animation: dustFloat 4s ease-in-out infinite;
 
-  // Moonwalk feet sliding backward
-  .foot-left {
-    animation: leftFootSlideBack 4s ease-in-out infinite;
-  }
+      &.dust-1 {
+        left: 10px;
+        animation-delay: 0s;
+      }
 
-  .foot-right {
-    animation: rightFootSlideBack 4s ease-in-out infinite;
+      &.dust-2 {
+        left: 45px;
+        animation-delay: 1s;
+      }
+
+      &.dust-3 {
+        left: 80px;
+        animation-delay: 2s;
+      }
+    }
   }
 }
 
-// Main moonwalk - moving right to left (backward)
-@keyframes moonwalkBackward {
+// Enhanced moonwalk animation - more realistic sliding
+@keyframes moonwalkSlide {
   0% {
-    transform: translateX(20px);
+    transform: translateX(40px) scaleX(1) skewX(0deg);
+  }
+  15% {
+    transform: translateX(20px) scaleX(0.95) skewX(-2deg) translateY(-2px);
+  }
+  30% {
+    transform: translateX(0px) scaleX(1.05) skewX(0deg) translateY(0px);
+  }
+  45% {
+    transform: translateX(-20px) scaleX(0.95) skewX(2deg) translateY(-1px);
+  }
+  60% {
+    transform: translateX(-40px) scaleX(1.02) skewX(0deg) translateY(0px);
   }
   75% {
-    transform: translateX(-20px);
-  }
-  100% {
-    transform: translateX(20px);
-  }
-}
-
-// Head tilting during moonwalk
-@keyframes headTilt {
-  0%, 100% {
-    transform: rotate(0deg);
-  }
-  50% {
-    transform: rotate(-5deg);
-  }
-}
-
-// Eye blinking
-@keyframes eyeBlink {
-  0%, 85%, 100% {
-    transform: scaleY(1);
+    transform: translateX(-20px) scaleX(0.98) skewX(-1deg) translateY(-1px);
   }
   90% {
-    transform: scaleY(0.1);
+    transform: translateX(10px) scaleX(1.03) skewX(1deg) translateY(0px);
+  }
+  100% {
+    transform: translateX(40px) scaleX(1) skewX(0deg) translateY(0px);
   }
 }
 
-// Body leaning during moonwalk
-@keyframes bodyLean {
-  0%, 100% {
-    transform: rotate(0deg) scaleX(1);
-  }
-  25% {
-    transform: rotate(-3deg) scaleX(0.95);
-  }
-  75% {
-    transform: rotate(3deg) scaleX(1.05);
-  }
-}
-
-// Left arm swinging during moonwalk
-@keyframes leftArmMoonwalk {
-  0%, 100% {
-    transform: rotate(0deg);
-  }
-  25% {
-    transform: rotate(20deg);
-  }
-  50% {
-    transform: rotate(-10deg);
-  }
-  75% {
-    transform: rotate(15deg);
-  }
-}
-
-// Right arm - normal movement then final ONNWAY pose
-@keyframes rightArmMoonwalk {
-  0%, 60% {
-    transform: rotate(0deg);
-  }
-  25% {
-    transform: rotate(-20deg);
-  }
-  50% {
-    transform: rotate(10deg);
-  }
-  80%, 100% {
-    transform: rotate(-90deg); // Points up to show ONNWAY
-  }
-}
-
-// ONNWAY text reveal - only appears at the end
+// ONNWAY text reveal - appears when finger points up
 @keyframes onnwayReveal {
-  0%, 75% {
+  0%, 60% {
     opacity: 0;
-    transform: translateY(20px) scale(0.5);
+    transform: translateY(20px) scale(0.5) rotate(-10deg);
   }
-  80%, 100% {
+  70%, 90% {
     opacity: 1;
-    transform: translateY(0px) scale(1);
+    transform: translateY(0px) scale(1) rotate(0deg);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-10px) scale(0.8) rotate(5deg);
   }
 }
 
-// Left leg classic moonwalk motion
-@keyframes leftLegMoonwalk {
+// Text pulsing effect
+@keyframes textPulse {
   0%, 100% {
-    transform: translateX(0px) rotate(0deg);
-  }
-  25% {
-    transform: translateX(-5px) rotate(10deg);
+    transform: scale(1);
   }
   50% {
-    transform: translateX(0px) rotate(0deg);
-  }
-  75% {
-    transform: translateX(5px) rotate(-5deg);
+    transform: scale(1.05);
   }
 }
 
-// Right leg moonwalk motion
-@keyframes rightLegMoonwalk {
+// Trail dots animation
+@keyframes dotPulse {
   0%, 100% {
-    transform: translateX(0px) rotate(0deg);
-  }
-  25% {
-    transform: translateX(5px) rotate(-5deg);
+    transform: scale(1);
+    opacity: 0.6;
   }
   50% {
-    transform: translateX(0px) rotate(0deg);
-  }
-  75% {
-    transform: translateX(-5px) rotate(10deg);
+    transform: scale(1.5);
+    opacity: 1;
   }
 }
 
-// Left foot sliding backward (moonwalk effect)
-@keyframes leftFootSlideBack {
+// Dust floating animation to simulate sliding feet
+@keyframes dustFloat {
   0%, 100% {
-    transform: translateX(0px) scaleX(1);
+    opacity: 0;
+    transform: translateY(0px) scale(0.5);
   }
   25% {
-    transform: translateX(-8px) scaleX(1.3);
+    opacity: 0.8;
+    transform: translateY(-5px) scale(1);
   }
   50% {
-    transform: translateX(-15px) scaleX(1.1);
+    opacity: 0.6;
+    transform: translateY(-8px) scale(1.2);
   }
   75% {
-    transform: translateX(-5px) scaleX(1.2);
-  }
-}
-
-// Right foot sliding backward
-@keyframes rightFootSlideBack {
-  0%, 100% {
-    transform: translateX(0px) scaleX(1);
-  }
-  25% {
-    transform: translateX(-5px) scaleX(1.2);
-  }
-  50% {
-    transform: translateX(-12px) scaleX(1.1);
-  }
-  75% {
-    transform: translateX(-8px) scaleX(1.3);
+    opacity: 0.3;
+    transform: translateY(-3px) scale(0.8);
   }
 }
 
 // Responsive design
 @media (max-width: $mobile) {
   .dancing-tourist {
-    svg {
-      width: 220px;
-      height: 260px;
+    .moonwalk-character {
+      width: 200px;
     }
 
     .onnway-text {
-      font-size: 12px;
+      top: -25px;
+      right: 40px;
+
+      span {
+        font-size: 14px;
+        padding: 6px 10px;
+      }
+    }
+
+    .moonwalk-trail {
+      bottom: 15px;
+
+      .trail-dot {
+        width: 6px;
+        height: 6px;
+      }
     }
   }
 }
@@ -238,27 +198,20 @@
 // Reduced motion accessibility
 @media (prefers-reduced-motion: reduce) {
   .dancing-tourist {
-    svg,
-    .head,
-    .eye,
-    .hat-top,
-    .hat-brim,
-    .hat-band,
-    .body,
-    .jacket,
-    .shirt,
-    .left-arm,
-    .right-arm,
-    .onnway-hand,
-    .left-leg,
-    .right-leg,
-    .foot-left,
-    .foot-right {
+    .moonwalk-character,
+    .onnway-text,
+    .moonwalk-trail,
+    .trail-dot {
       animation: none;
     }
 
-    .onnway-hand {
+    .onnway-text {
       opacity: 1;
+      transform: none;
+    }
+
+    .moonwalk-trail {
+      opacity: 0.6;
     }
   }
 }
