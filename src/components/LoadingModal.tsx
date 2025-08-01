@@ -10,7 +10,6 @@ interface LoadingModalProps {
 
 const LoadingModal: React.FC<LoadingModalProps> = ({ isVisible, onClose }) => {
     const [currentMessage, setCurrentMessage] = useState(0);
-    const [progress, setProgress] = useState(0);
 
     const messages = [
         "Teaching the map to dance too...",
@@ -29,17 +28,8 @@ const LoadingModal: React.FC<LoadingModalProps> = ({ isVisible, onClose }) => {
             setCurrentMessage(prev => (prev + 1) % messages.length);
         }, 2500);
 
-        // Simulate progress (this would be real progress in production)
-        const progressInterval = setInterval(() => {
-            setProgress(prev => {
-                if (prev >= 100) return 100;
-                return prev + Math.random() * 15;
-            });
-        }, 800);
-
         return () => {
             clearInterval(messageInterval);
-            clearInterval(progressInterval);
         };
     }, [isVisible]);
 
@@ -47,7 +37,6 @@ const LoadingModal: React.FC<LoadingModalProps> = ({ isVisible, onClose }) => {
     useEffect(() => {
         if (!isVisible) {
             setCurrentMessage(0);
-            setProgress(0);
         }
     }, [isVisible]);
 
@@ -64,19 +53,6 @@ const LoadingModal: React.FC<LoadingModalProps> = ({ isVisible, onClose }) => {
                 {/* Loading Message */}
                 <div className="loading-message">
                     <h3>{messages[currentMessage]}</h3>
-                </div>
-
-                {/* Progress Bar */}
-                <div className="progress-container">
-                    <div className="progress-bar">
-                        <div
-                            className="progress-fill"
-                            style={{ width: `${Math.min(progress, 100)}%` }}
-                        />
-                    </div>
-                    <div className="progress-text">
-                        {Math.round(Math.min(progress, 100))}%
-                    </div>
                 </div>
 
                 {/* Loading Dots */}

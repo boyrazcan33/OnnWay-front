@@ -1,5 +1,5 @@
-// src/App.tsx - Updated with cultural greetings in header
-import React, { useState } from 'react';
+// src/App.tsx - FINAL VERSION with History API + Fixed Loading
+import React, { useState, useEffect } from 'react';
 import { useLocation } from './hooks/useLocation';
 import { createRoute } from './services/api';
 import CitySelector from './components/CitySelector';
@@ -28,6 +28,24 @@ function App() {
   // Loading modal state
   const [showLoadingModal, setShowLoadingModal] = useState(false);
 
+  // Handle browser back button
+  useEffect(() => {
+    const handlePopState = () => {
+      // When user presses back button, go to city selector
+      setRoute(null);
+      setRouteError(null);
+      setFormState({
+        selectedCity: null,
+        activity: null,
+        budget: null,
+        duration: null
+      });
+    };
+
+    window.addEventListener('popstate', handlePopState);
+    return () => window.removeEventListener('popstate', handlePopState);
+  }, []);
+
   // Handle city selection
   const handleCitySelect = (city: City) => {
     setFormState({
@@ -49,7 +67,7 @@ function App() {
     }));
   };
 
-  // Handle route creation with loading modal
+  // Handle route creation with loading modal - FIXED VERSION
   const handleApply = async () => {
     if (!location || !formState.selectedCity || !formState.activity || !formState.budget || !formState.duration) {
       return;
@@ -58,7 +76,7 @@ function App() {
     // Show loading modal and set loading states
     setShowLoadingModal(true);
     setRouteLoading(true);
-    setRouteError(null);
+    setRouteError(null); // Clear any previous errors
 
     try {
       const request: RouteRequest = {
@@ -71,11 +89,20 @@ function App() {
       };
 
       const response = await createRoute(request);
+
+      // Set route FIRST, then hide loading
       setRoute(response);
+
+      // ADD URL TO HISTORY - User can now use back button
+      window.history.pushState({ route: true }, '', '/route');
+
+      // Hide loading modal and reset loading state AFTER route is set
+      setShowLoadingModal(false);
+      setRouteLoading(false);
+
     } catch (error) {
+      // Only show error if request actually failed
       setRouteError(error instanceof Error ? error.message : 'Failed to create route');
-    } finally {
-      // Hide loading modal and reset loading state
       setShowLoadingModal(false);
       setRouteLoading(false);
     }
@@ -91,6 +118,9 @@ function App() {
       budget: null,
       duration: null
     });
+
+    // UPDATE URL BACK TO HOME
+    window.history.pushState({ home: true }, '', '/');
   };
 
   // Handle loading modal cancel
