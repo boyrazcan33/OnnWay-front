@@ -1,46 +1,102 @@
-# Getting Started with Create React App
+# 🗺️ OnnWay Tourism Route Optimizer
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Smart tourism route planning for Istanbul and Tallinn.
 
-## Available Scripts
+## **Live Demo**
+🌐 **Frontend:** https://onnway-tourism-routes.vercel.app
 
-In the project directory, you can run:
+## **Why This Project?**
 
-### `npm start`
+* **Smart Route Planning**: Optimizes walking routes between attractions
+* **Multi-City Support**: Istanbul 🇹🇷 and Tallinn 🇪🇪
+* **Personalized Experience**: Filter by activity, budget, and duration
+* **Real-time Location**: Uses GPS for optimal starting point
+* **Interactive Maps**: Visual route display with attraction details
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+## **Features**
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+### **Route Optimization**
+* **Activity Types**: Food & Restaurants, Art & History, Social Media Spots, Adventure
+* **Budget Ranges**: Budget Friendly, Mid Range, Premium
+* **Duration Options**: Short (3-4 hours), Medium (1 day), Long (2+ days)
+* **Smart Algorithm**: Nearest neighbor optimization for minimal walking
 
-### `npm test`
+### **Interactive Experience**
+* **Live Maps**: Leaflet-based route visualization
+* **Attraction Details**: Full descriptions, costs, and durations
+* **External Links**: Google Maps, Street View, TripAdvisor integration
+* **Mobile Optimized**: Touch-friendly responsive design
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## **Technical Architecture**
 
-### `npm run build`
+### **Frontend Stack**
+* **React 18** + TypeScript
+* **SCSS** with mobile-first design
+* **Leaflet** for interactive mapping
+* **Custom hooks** for geolocation
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+### **Backend Stack**
+* **Spring Boot 3.5** + Java 21
+* **PostgreSQL** with JPA/Hibernate
+* **OSRM** for real walking distances
+* **RESTful API** design
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+## **Quick Start**
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+### **Frontend**
+```bash
+npm install
+npm start
+```
 
-### `npm run eject`
+### **Backend**
+```bash
+cd route
+./mvnw spring-boot:run
+```
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+## **API Usage**
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+### **Create Route**
+```json
+{
+  "startLat": 41.0082,
+  "startLon": 28.9784,
+  "city": "ISTANBUL",
+  "activity": "FOOD",
+  "budget": "MID_RANGE",
+  "duration": "MEDIUM"
+}
+```
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+### **Response**
+```json
+{
+  "optimizedRoute": [
+    {
+      "order": 1,
+      "name": "Galata Tower",
+      "address": "Galata, Istanbul",
+      "estimatedDuration": 60,
+      "walkingTime": "8 min",
+      "cost": 15.0
+    }
+  ],
+  "totalDistance": "3.2 km",
+  "totalDuration": "4h 30m",
+  "totalCost": 45.50
+}
+```
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+## **Tech Stack**
+* **Frontend**: React + TypeScript + SCSS + Leaflet
+* **Backend**: Spring Boot + PostgreSQL + OSRM
+* **Deployment**: Vercel + Google Cloud
 
-## Learn More
+## **Real-World Usage**
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+Perfect for:
+* Tourism mobile apps
+* City walking tours
+* Travel planning websites
+* Tourism businesses needing route optimization
