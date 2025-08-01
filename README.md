@@ -3,7 +3,7 @@
 Smart tourism route planning for Istanbul and Tallinn.
 
 ## **Live Demo**
-🌐 **Frontend:** https://onnway-tourism-routes.vercel.app
+🌐 **Frontend:** https://geoapp-front-delta.vercel.app/
 
 ## **Why This Project?**
 
